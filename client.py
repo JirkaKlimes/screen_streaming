@@ -33,6 +33,7 @@ class VideoClient:
         self.error = None
         self.resolution = mp.Array(ctypes.c_uint32, 2)
         self.capture_area = mp.Array(ctypes.c_uint32, 4)
+        self.capture_process = None
 
     def recvall(self, n: int) -> bytearray:
         data = bytearray()
@@ -57,8 +58,8 @@ class VideoClient:
         self.resolution[:] = np.uint32(pickle.loads(self.recv_bytes()))
 
         self.recording.value = True
-        p = mp.Process(target=self._recording_loop, daemon=True)
-        p.start()
+        self.capture_process = mp.Process(target=self._recording_loop)
+        self.capture_process.start()
 
         while self.running.value:
             img_buffer = self.img_q.get()
@@ -97,6 +98,8 @@ class VideoClient:
                 self._communication_loop()
             except OSError as e:
                 self.recording.value = False
+                if self.capture_process:
+                    self.capture_process.terminate()
                 while not self.img_q.empty:
                     self.img_q.get()
                 self.sock.close()
@@ -108,7 +111,9 @@ class VideoClient:
                         print(f'[+] Restarting in {t}...', end='\r')
                         time.sleep(1)
                     print(f'[+] Restarting now...')
-
+                if self.capture_process:
+                    self.capture_process.close()
+                    self.capture_process = None
 
 if __name__ == "__main__":
     import argparse
