@@ -57,7 +57,7 @@ class VideoClient:
         self.resolution[:] = np.uint32(pickle.loads(self.recv_bytes()))
 
         self.recording.value = True
-        p = mp.Process(target=self._recording_loop, daemon=False)
+        p = mp.Process(target=self._recording_loop, daemon=True)
         p.start()
 
         while self.running.value:
@@ -69,7 +69,7 @@ class VideoClient:
     def _recording_loop(self):
         with MSS() as mss:
             x, y, w, h = self.capture_area[:]
-            capture_area = {"left": x, "top": y, "width": w, "height": h}
+            capture_area = {"left": int(x), "top": int(y), "width": int(w), "height": int(h)}
             resolution = self.resolution[:]
             if self.stdout:
                 print(f'[+] Capture area set to x:{x} y:{y} w:{w} h:{h}')
@@ -99,6 +99,7 @@ class VideoClient:
                 self.recording.value = False
                 while not self.img_q.empty:
                     self.img_q.get()
+                self.sock.close()
                 self.sock = None
                 self.error = str(e)
                 if self.stdout:
