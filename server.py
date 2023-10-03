@@ -133,8 +133,7 @@ if __name__ == "__main__":
     ip = ''
     port = 12000
 
-    # server = VideoServer(ip, port, area=(512, 512))
-    server = VideoServer(ip, port, area=(1920, 1080))
+    server = VideoServer(ip, port, area=(512, 512))
     error = server.start()
     if error is None:
         print("Video Server is running!")
