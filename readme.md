@@ -4,13 +4,13 @@ This repository contains Python scripts for achieving fast LAN screen video tran
 
 ## Key Features
 
-### VideoClient (Client-side)
+### VideoClient
 
 -   **Efficient Screen Capture:** The `VideoClient` efficiently captures screen frames.
 -   **Low Latency:** Achieve sub-50ms latency for real-time video transfer.
 -   **Cross-Platform:** Works on both Linux and Windows operating systems.
 
-### VideoServer (Server-side)
+### VideoServer
 
 -   **Customizable Capture Area:** Specify the capture area and desired resolution.
 -   **Latency Monitoring:** Measure and report latency and frames per second (FPS).
@@ -22,7 +22,7 @@ Efforts were made to optimize network efficiency, and various encoding methods w
 
 ## Requirements
 
-### VideoClient (Client-side)
+### VideoClient
 
 To run the `VideoClient` script, you'll need the following Python packages:
 
@@ -34,7 +34,7 @@ pip install -r client-requirements.txt
 -   `numpy==1.23.0`: Efficient data handling for image data.
 -   `opencv-python==4.8.0.76`: OpenCV library for image processing.
 
-### VideoServer (Server-side)
+### VideoServer
 
 To run the `VideoServer` script, you'll need the following Python packages:
 
