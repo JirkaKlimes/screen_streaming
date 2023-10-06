@@ -16,6 +16,10 @@ This repository contains Python scripts for achieving fast LAN screen video tran
 -   **Latency Monitoring:** Measure and report latency and frames per second (FPS).
 -   **Graceful Shutdown:** Stop the server gracefully when needed.
 
+## Network Efficiency Consideration
+
+Efforts were made to optimize network efficiency, and various encoding methods were explored. However, it was observed that encoding added significant processing overhead and introduced more latency than it reduced. Therefore, the decision was made to transmit raw screen data, resulting in faster and more responsive screen sharing, especially suitable for LAN environments.
+
 ## Requirements
 
 ### VideoClient (Client-side)
